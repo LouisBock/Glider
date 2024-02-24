@@ -1,0 +1,16 @@
+width:800
+height:600
+antAmount:500
+groupAmount:1
+colors:255,255,255
+homeColor:0,0,255,127
+foodColor:0,255,0,127
+clearColor:0,0,0
+pheroStrength:800
+lookRange:6
+lookDist:8
+speed:1.1
+counterReset:500
+radius:4
+randomDirFactor:0.02
+pherosAtraction:0.03

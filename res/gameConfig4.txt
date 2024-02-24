@@ -1,0 +1,13 @@
+width:600
+height:600
+gliderAmount:1400
+groupAmount:2
+colors:255,255,255|0,0,0
+clearColor:127,127,127,51
+randomPos:true
+lookRange:400
+speed:1
+radius:4
+randomDirFactor:0.001
+neighborAtraction:0.01
+lookDist:20
