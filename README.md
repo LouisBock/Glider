@@ -6,4 +6,7 @@ Their movement directions is defined on two aspects:
 First they have a tendency to move towards other gliders.  
 Second the direction is randomly adjusted.  
 
+Additionally there are different groups of gliders.
+
 This results in organic simulations depending on different parameters, that are beatifull to watch.
+![glider03](https://github.com/LouisBock/Glider/assets/82266724/6236ee72-ae51-497f-a52f-75f54d3f5241)
