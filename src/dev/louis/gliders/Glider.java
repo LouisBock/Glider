@@ -22,8 +22,14 @@ public class Glider {
 	private float dir;
 	
 	public Glider(GliderGame game, float x, float y, int group) {
-		speed = GliderConfig.speed;
-		radius = GliderConfig.radius;
+		if(GliderConfig.randomSpeed) {
+			speed = (float) (Math.random() * GliderConfig.speed + 0.5);
+			radius =  (2-speed) * GliderConfig.radius;
+		} else {
+			speed = GliderConfig.speed;
+			radius = GliderConfig.radius;
+		}
+		
 		randomDirFactor = GliderConfig.randomDirFactor;
 		neighborAtraction = GliderConfig.neighborAtraction;
 		lookDist = GliderConfig.lookDist;

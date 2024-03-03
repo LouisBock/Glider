@@ -12,7 +12,7 @@ public class GliderConfig {
     private static HashMap<String, String> gameConfigHashMap = new HashMap<String, String>();
     
     public static int width, height, gliderAmount, groupAmount;
-    public static boolean randomPos;
+    public static boolean randomPos, randomSpeed;
     public static float lookRange, speed, radius, randomDirFactor, neighborAtraction, lookDist;
     private static int[][] colors;
     public static int[] clearColor;
@@ -59,6 +59,7 @@ public class GliderConfig {
 		groupAmount = Integer.parseInt(gameConfigHashMap.get("groupAmount"));
 		
 		randomPos = Boolean.parseBoolean(gameConfigHashMap.get("randomPos"));
+		randomSpeed = Boolean.parseBoolean(gameConfigHashMap.get("randomSpeed"));
 		
 		lookRange = Float.parseFloat(gameConfigHashMap.get("lookRange"));
 		speed = Float.parseFloat(gameConfigHashMap.get("speed"));

@@ -5,6 +5,7 @@ groupAmount:5
 colors:-150,0,0|0,-150,0|0,0,-150|-180,-180,0|255,0,-150
 clearColor:0,0,0,30
 randomPos:false
+randomSpeed:false
 lookRange:600
 speed:1
 radius:4
