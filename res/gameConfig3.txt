@@ -12,3 +12,4 @@ radius:4
 randomDirFactor:0.001
 neighborAtraction:0.014
 lookDist:20
+sharpness:5

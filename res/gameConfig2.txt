@@ -3,7 +3,7 @@ height:500
 gliderAmount:1200
 groupAmount:2
 colors:255,-1,0|0,-1,-150
-clearColor:0,0,0,20
+clearColor:0,0,0,5
 randomPos:false
 randomSpeed:true
 lookRange:400
@@ -12,3 +12,4 @@ radius:4
 randomDirFactor:0.002
 neighborAtraction:0.012
 lookDist:20
+sharpness:0

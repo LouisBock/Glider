@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 import dev.louis.gliders.display.Display;
 import dev.louis.gliders.input.GliderConfig;
@@ -13,7 +14,7 @@ import dev.louis.gliders.input.MouseManager;
 public class GliderGame implements Runnable{
 	
 	private Display display;
-	private int width, height;
+	private int width, height, sharpness;
 	public String title;
 	
 	private boolean running = false;
@@ -22,6 +23,7 @@ public class GliderGame implements Runnable{
 	
 	private BufferStrategy bs;
 	private Graphics g;
+	private BufferedImage img;
 	private final Color clearCol = new Color(GliderConfig.clearColor[0], GliderConfig.clearColor[1], GliderConfig.clearColor[2], GliderConfig.clearColor[3]);
 	
 	//Input
@@ -37,6 +39,7 @@ public class GliderGame implements Runnable{
 		
 		width = GliderConfig.width;
 		height = GliderConfig.height;
+		sharpness = GliderConfig.sharpness;
 		gliders = new Glider[GliderConfig.gliderAmount];
 		lookRange = GliderConfig.lookRange;
 		
@@ -50,6 +53,7 @@ public class GliderGame implements Runnable{
 		display.getCanvas().addMouseListener(mouseManager);
 		display.getCanvas().createBufferStrategy(3);
 		bs = display.getCanvas().getBufferStrategy();
+		img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		//background black
 		g = bs.getDrawGraphics();
 		Color fullClear = new Color(clearCol.getRed(), clearCol.getGreen(), clearCol.getBlue(), 255);
@@ -96,7 +100,9 @@ public class GliderGame implements Runnable{
 	}
 	
 	private void render() {
-		g = bs.getDrawGraphics();
+		if(sharpness > 0) img = blur(img);
+		
+		g = img.getGraphics();
 		
 		//Draw Here!
 		
@@ -108,10 +114,12 @@ public class GliderGame implements Runnable{
 			glider.render(g);
 		}
 		
-		blur();
 		//End Drawing!
 		
+		Graphics gbs = bs.getDrawGraphics();
+		gbs.drawImage(img, 0, 0, null);
 		bs.show();
+		gbs.dispose();
 		g.dispose();
 	}
 	
@@ -157,8 +165,42 @@ public class GliderGame implements Runnable{
 		return count;
 	}
 	
-	private void blur() {
+	private BufferedImage blur(BufferedImage bi) {
+		BufferedImage blured = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		
+		for(int x = 1; x < width - 1; x++) {
+			for(int y = 1; y < height - 1; y++) {
+				blured.setRGB(x, y, getBluredPixel(bi, x, y));
+			}
+		}
+		
+		return blured;
+	}
+	
+	private int getBluredPixel(BufferedImage bi, int x, int y) {
+		int blue = 0;
+		int green = 0;
+		int red = 0;
+		int alpha = 0;
+		for(int i = -1; i <= 1; i++) {
+			for(int j = -1; j <= 1; j++) {
+				Color color = new Color(bi.getRGB(x+i, y+j));
+				
+				int strength = (i==0 && j==0)?sharpness:1;
+				
+				blue += color.getBlue() * strength;
+				green += color.getGreen()* strength;
+				red += color.getRed()* strength;
+				alpha += color.getAlpha()* strength;
+			}
+		}
+		int count = 8 + sharpness;
+		blue /= count;
+		green /= count;
+		red /= count;
+		alpha /= count;
+		
+		return new Color(red, green, blue, alpha).getRGB();
 	}
 	
 	public KeyManager getKeyManager() {
