@@ -2,6 +2,7 @@ package dev.louis.gliders;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
 import dev.louis.gliders.display.Display;
@@ -99,12 +100,15 @@ public class GliderGame implements Runnable{
 		
 		//Draw Here!
 		
-		g.setColor(clearCol);
+		//soft clear
+		g.setColor(clearCol);//low alpha
 		g.fillRect(0, 0, width, height);
 		
 		for(Glider glider : gliders) {
 			glider.render(g);
 		}
+		
+		blur();
 		//End Drawing!
 		
 		bs.show();
@@ -151,6 +155,10 @@ public class GliderGame implements Runnable{
 			}
 		}
 		return count;
+	}
+	
+	private void blur() {
+		
 	}
 	
 	public KeyManager getKeyManager() {
