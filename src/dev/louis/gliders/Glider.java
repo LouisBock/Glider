@@ -48,9 +48,6 @@ public class Glider {
 	}
 	
 	public void tick() {
-		x += speed*(Math.cos(dir));
-		y += speed*(Math.sin(dir));
-		
 		//direction calculation
 		chaseNeighbors();
 		randomizeDirection();
@@ -64,6 +61,9 @@ public class Glider {
 	}
 
 	public void render(Graphics g) {
+		x += speed*(Math.cos(dir));
+		y += speed*(Math.sin(dir));
+		
 		g.setColor(col);
 		g.fillOval((int) x, (int) y, (int) radius, (int) radius);
 	}
