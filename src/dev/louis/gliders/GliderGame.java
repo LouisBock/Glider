@@ -2,9 +2,9 @@ package dev.louis.gliders;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
 
 import dev.louis.gliders.display.Display;
 import dev.louis.gliders.input.GliderConfig;
@@ -33,8 +33,10 @@ public class GliderGame implements Runnable{
 	private Glider[] gliders;
 	
 	private float lookRange, lookRangeSquare, lookDist;
-	private int gridSquareLength;
+	private int gridSquareLength, gridWidth, gridHeight;
+	private LinkedList<Integer>[][] grid;
 	
+	@SuppressWarnings("unchecked")
 	public GliderGame() {
 		title = "Gliders";
 		
@@ -47,11 +49,19 @@ public class GliderGame implements Runnable{
 		lookDist = GliderConfig.lookDist;
 		
 		gridSquareLength = (int) Math.ceil(lookRange + lookDist);
+		gridWidth = (int) Math.ceil(width/gridSquareLength);
+		gridHeight = (int) Math.ceil(height/gridSquareLength);
+		
+		grid = new LinkedList[gridHeight][gridWidth];
+		
+		for(int i = 0; i < gridHeight; i++) {
+			for(int j = 0; j < gridWidth; j++) {
+				grid[i][j] = new LinkedList<Integer>();
+			}
+		}
 		
 		keyManager = new KeyManager();
 		mouseManager = new MouseManager();
-		
-		
 	}
 	
 	private void init() {
@@ -76,6 +86,9 @@ public class GliderGame implements Runnable{
 				gliders[i] = new Glider(this, width/2, height/2, i%GliderConfig.groupAmount);
 			}
 		}
+		
+		updateGrid();
+//		printGrid();
 	}
 	
 	private void tick() {
@@ -85,6 +98,9 @@ public class GliderGame implements Runnable{
 		for(Glider glider : gliders) {
 			glider.tick();
 		}
+		
+		updateGrid();
+//		printGrid();
 		
 		if(mouseManager.button1) {
 			for(Glider glider : gliders) {
@@ -160,16 +176,61 @@ public class GliderGame implements Runnable{
 	
 	public int getNeighborCount(float x, float y, int group){
 		int count = 0;
-		for(Glider glider : gliders) {
-			if((Math.pow(glider.getX()-x, 2) + Math.pow(glider.getY()-y, 2)) < lookRangeSquare) {
-				if(glider.getGroup() == group) {
-					count++;
-				} else {
-					count--;
+		int xi = (int) Math.round(x/gridSquareLength);
+		int yi = (int) Math.round(y/gridSquareLength);
+		for(int i = xi-1; i <= xi+1; i++) {
+			for(int j = yi-1; j <= yi+1; j++) {
+				if(i >= 0 && i < gridWidth && j >= 0 && j < gridHeight) {
+					LinkedList<Integer> list = grid[j][i];
+					for(Integer k : list) {
+						Glider glider = gliders[k];
+						if((Math.pow(glider.getX()-x, 2) + Math.pow(glider.getY()-y, 2)) < lookRangeSquare) {
+							if(glider.getGroup() == group) {
+								count++;
+							} else {
+								count--;
+							}
+						}
+					}
 				}
 			}
 		}
+			
 		return count;
+	}
+	
+//	public int getNeighborCount(float x, float y, int group){
+//		int count = 0;
+//		for(Glider glider : gliders) {
+//			if((Math.pow(glider.getX()-x, 2) + Math.pow(glider.getY()-y, 2)) < lookRangeSquare) {
+//				if(glider.getGroup() == group) {
+//					count++;
+//				} else {
+//					count--;
+//				}
+//			}
+//		}
+//		return count;
+//	}
+	
+	private void updateGrid(){
+		for(int i = 0; i < gridHeight; i++) {
+			for(int j = 0; j < gridWidth; j++) {
+				grid[i][j].clear();
+			}
+		}
+		
+		for(int i = 0; i < gliders.length; i++) {
+			int x = (int) Math.round(gliders[i].getX()/gridSquareLength);
+			int y = (int) Math.round(gliders[i].getY()/gridSquareLength);
+			
+			if(x < 0) x = 0;
+			if(x >= gridWidth) x = gridWidth - 1;
+			if(y < 0) y = 0;
+			if(y >= gridHeight) y = gridHeight - 1;
+			
+			grid[y][x].add(i);
+		}
 	}
 	
 	private BufferedImage blur(BufferedImage bi) {
@@ -246,5 +307,15 @@ public class GliderGame implements Runnable{
 	
 	public synchronized void stopRunning() {
 		running = false;
+	}
+	
+	private void printGrid() {
+		for(int i = 0; i < grid.length; i++) {
+			for(LinkedList<Integer> l : grid[i]) {
+				System.out.print(l.size() + " ");
+			}
+			System.out.print("\n");
+		}
+		System.out.println("___________________________________________");
 	}
 }

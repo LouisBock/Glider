@@ -147,13 +147,12 @@ public class Glider {
 		dir = dirMouse;
 	}
 	
-	/*
 	private void straighten() {
-		float amount = 1.55f;
+		float amount = 5f;
 		float big = dir * amount;
 		float round = Math.round(big);
 		dir = round/amount;
-	}*/
+	}
 	
 	public float getX() {
 		return x;

@@ -1,6 +1,6 @@
 width:1400
 height:1000
-gliderAmount:1300
+gliderAmount:1200
 groupAmount:1
 colors:255,-1,0
 clearColor:0,0,0,15
@@ -9,7 +9,7 @@ randomSpeed:false
 lookRange:20
 speed:1
 radius:4
-randomDirFactor:0.05
-neighborAtraction:0.018
+randomDirFactor:0.04
+neighborAtraction:0.019
 lookDist:20
 sharpness:0

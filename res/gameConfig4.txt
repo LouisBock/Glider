@@ -1,6 +1,6 @@
 width:600
 height:600
-gliderAmount:1400
+gliderAmount:2000
 groupAmount:2
 colors:255,255,255|0,0,0
 clearColor:127,127,127,51
@@ -12,4 +12,4 @@ radius:4
 randomDirFactor:0.001
 neighborAtraction:0.01
 lookDist:20
-sharpness:5
+sharpness:0

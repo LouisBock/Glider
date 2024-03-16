@@ -1,6 +1,6 @@
 width:600
 height:500
-gliderAmount:1200
+gliderAmount:1800
 groupAmount:1
 colors:0,-1,-150|255,-1,0
 clearColor:0,0,0,30
