@@ -32,7 +32,8 @@ public class GliderGame implements Runnable{
 	
 	private Glider[] gliders;
 	
-	private float lookRange;
+	private float lookRange, lookRangeSquare, lookDist;
+	private int gridSquareLength;
 	
 	public GliderGame() {
 		title = "Gliders";
@@ -42,9 +43,15 @@ public class GliderGame implements Runnable{
 		sharpness = GliderConfig.sharpness;
 		gliders = new Glider[GliderConfig.gliderAmount];
 		lookRange = GliderConfig.lookRange;
+		lookRangeSquare = (float) Math.pow(lookRange, 2);
+		lookDist = GliderConfig.lookDist;
+		
+		gridSquareLength = (int) Math.ceil(lookRange + lookDist);
 		
 		keyManager = new KeyManager();
 		mouseManager = new MouseManager();
+		
+		
 	}
 	
 	private void init() {
@@ -154,7 +161,7 @@ public class GliderGame implements Runnable{
 	public int getNeighborCount(float x, float y, int group){
 		int count = 0;
 		for(Glider glider : gliders) {
-			if((Math.pow(glider.getX()-x, 2) + Math.pow(glider.getY()-y, 2)) < lookRange) {
+			if((Math.pow(glider.getX()-x, 2) + Math.pow(glider.getY()-y, 2)) < lookRangeSquare) {
 				if(glider.getGroup() == group) {
 					count++;
 				} else {

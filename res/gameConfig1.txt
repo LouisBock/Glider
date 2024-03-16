@@ -6,7 +6,7 @@ colors:255,-1,0
 clearColor:0,0,0,15
 randomPos:false
 randomSpeed:false
-lookRange:400
+lookRange:20
 speed:1
 radius:4
 randomDirFactor:0.05
