@@ -15,9 +15,9 @@ This results in organic simulations depending on different parameters, that are 
 ![image](https://github.com/LouisBock/Glider/assets/82266724/49761faf-4971-4938-8d0c-d502fdda6217)
 
 # Ants
-Home: cyan
-Food: yellow
-Home Pheromones: blue
-Food Pheromones: green
+Home: cyan \\
+Food: yellow \\
+Home Pheromones: blue \\
+Food Pheromones: green \\
 
 ![ant01](https://github.com/LouisBock/Glider/assets/82266724/96ba7c4e-9413-4004-b6a0-278e1b14d48d)
